@@ -1,3 +1,5 @@
+import 'package:exp_app/pages/add_entries.dart';
+import 'package:exp_app/pages/add_expenses.dart';
 import 'package:exp_app/providers/ui_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,12 +29,18 @@ class MyApp extends StatelessWidget {
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: Colors.green,
         ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.lightGreen,
+          foregroundColor: Colors.white,
+        ),
         scaffoldBackgroundColor: Colors.grey[900],
         primaryColorDark: Colors.grey[800],
       ),
       initialRoute: 'home',
       routes: {
         'home': (_) => const HomePage(),
+        'addEntries': (_) => const AddEntries(),
+        'addExpenses': (_) => const AddExpenses(),
       },
     );
   }
