@@ -2,6 +2,7 @@ import 'package:exp_app/pages/add_entries.dart';
 import 'package:exp_app/pages/add_expenses.dart';
 import 'package:exp_app/providers/ui_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/home_page.dart';
@@ -22,6 +23,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es'),
+        Locale('en'),
+      ],
       theme: ThemeData.dark().copyWith(
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[900],
@@ -32,6 +40,9 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.lightGreen,
           foregroundColor: Colors.white,
+        ),
+        colorScheme: const ColorScheme.dark(
+          primary: Colors.green,
         ),
         scaffoldBackgroundColor: Colors.grey[900],
         primaryColorDark: Colors.grey[800],

@@ -1,8 +1,11 @@
 import 'package:exp_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/combined_model.dart';
+
 class BSNumKeyboard extends StatefulWidget {
-  const BSNumKeyboard({super.key});
+  final CombinedModel cModel;
+  const BSNumKeyboard({super.key, required this.cModel});
 
   @override
   State<BSNumKeyboard> createState() => _BSNumKeyboardState();
@@ -10,6 +13,12 @@ class BSNumKeyboard extends StatefulWidget {
 
 class _BSNumKeyboardState extends State<BSNumKeyboard> {
   String amount = '0.00';
+
+  @override
+  void initState() {
+    amount = widget.cModel.amount.toStringAsFixed(2);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +54,7 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
       onTap: () {
         setState(() {
           amount += _text;
+          widget.cModel.amount = double.parse(amount);
         });
       },
       child: SizedBox(
@@ -59,6 +69,11 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
         ),
       ),
     );
+  }
+
+  _expenseChange(String amount) {
+    if (amount == '') amount = '0.00';
+    widget.cModel.amount = double.parse(amount);
   }
 
   _numPad() {
@@ -128,12 +143,14 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
                                     if (amount.length > 0.0) {
                                       amount = amount.substring(
                                           0, amount.length - 1);
+                                      _expenseChange(amount);
                                     }
                                   });
                                 },
                                 onLongPress: () {
                                   setState(() {
                                     amount = '';
+                                    _expenseChange(amount);
                                   });
                                 },
                                 child: SizedBox(
@@ -157,6 +174,7 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
                               onTap: () {
                                 setState(() {
                                   amount = '0.00';
+                                  _expenseChange(amount);
                                   Navigator.pop(context);
                                 });
                               },
@@ -169,6 +187,7 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
                               onTap: () {
                                 setState(() {
                                   if (amount.length == 0.0) amount = '0.00';
+                                  _expenseChange(amount);
                                   Navigator.pop(context);
                                 });
                               },

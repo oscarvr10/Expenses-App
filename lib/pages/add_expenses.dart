@@ -1,4 +1,6 @@
+import 'package:exp_app/models/combined_model.dart';
 import 'package:exp_app/utils/constants.dart';
+import 'package:exp_app/widgets/add_expenses_wt/date_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/add_expenses_wt/bs_num_keyboard.dart';
@@ -9,43 +11,43 @@ class AddExpenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Agregar Gasto'),
-          elevation: 0.0,
-        ),
-        body: Column(
-          children: [
-            const BSNumKeyboard(),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: Constants.sheetBoxDecoration(
-                  Theme.of(context).primaryColorDark,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('Fecha 12/12/12'),
-                    Text('Seleccionar categoría'),
-                    Text('Agregar Comentario )opcional)'),
-                    CommentBox(),
-                    Expanded(
-                      child: Center(
-                        child: Text('Ok'),
+    CombinedModel cModel = CombinedModel();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Agregar Gasto'),
+        elevation: 0.0,
+      ),
+      body: Column(
+        children: [
+          BSNumKeyboard(cModel: cModel),
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: Constants.sheetBoxDecoration(
+                Theme.of(context).primaryColorDark,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DatePicker(cModel: cModel),
+                  const Text('Seleccionar categoría'),
+                  CommentBox(cModel: cModel),
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        child: const Text(''),
+                        onTap: () {
+                          print(cModel.amount);
+                        },
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
