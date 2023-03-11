@@ -20,7 +20,7 @@ class _DatePickerState extends State<DatePicker> {
       widget.cModel.month = DateTime.now().month;
       widget.cModel.day = DateTime.now().day;
     } else {
-      selectedDay = 'Otro día';
+      selectedDay = 'Otro';
     }
 
     super.initState();
@@ -59,7 +59,7 @@ class _DatePickerState extends State<DatePicker> {
     Map<String, DateTime> items = {
       'Hoy': _date,
       'Ayer': _date.subtract(const Duration(hours: 24)),
-      'Otro día': _date
+      'Otro': _date
     };
 
     items.forEach(
@@ -74,7 +74,7 @@ class _DatePickerState extends State<DatePicker> {
                   widget.cModel.month = date.month;
                   widget.cModel.day = date.day;
 
-                  if (name == 'Otro día') _calendar();
+                  if (name == 'Otro') _calendar();
                 });
               },
               child: DatePickerContainer(
