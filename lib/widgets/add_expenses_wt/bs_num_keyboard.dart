@@ -85,11 +85,7 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
       enableDrag: false,
       isScrollControlled: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(30.0),
-        ),
-      ),
+      shape: Constants.bottomSheetBorder(radius: 30.0),
       context: context,
       builder: (BuildContext context) {
         return Padding(

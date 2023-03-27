@@ -29,4 +29,12 @@ class Constants {
       ),
     );
   }
+
+  static bottomSheetBorder({double radius = 25.0}) {
+    return RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(radius),
+      ),
+    );
+  }
 }

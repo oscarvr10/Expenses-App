@@ -1,7 +1,13 @@
 import 'package:exp_app/models/combined_model.dart';
 import 'package:exp_app/utils/extensions.dart';
+import 'package:exp_app/widgets/add_expenses_wt/admin_category.dart';
 import 'package:exp_app/widgets/add_expenses_wt/category_list.dart';
+import 'package:exp_app/widgets/add_expenses_wt/create_category.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../models/features_model.dart';
+import '../../providers/expenses_provider.dart';
+import '../../utils/constants.dart';
 
 class BsCategory extends StatefulWidget {
   final CombinedModel cModel;
@@ -13,8 +19,23 @@ class BsCategory extends StatefulWidget {
 }
 
 class _BsCategoryState extends State<BsCategory> {
+  var categoryList = CategoryList().catList;
+  final FeaturesModel fModel = FeaturesModel();
+
+  @override
+  void initState() {
+    var expProvider = context.read<ExpensesProvider>();
+    if (expProvider.fList.isEmpty) {
+      for (var item in categoryList) {
+        expProvider.addNewFeature(item);
+      }
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final featureList = context.watch<ExpensesProvider>().fList;
     bool hasData = false;
 
     if (widget.cModel.category != 'Selecciona una categoría') {
@@ -22,7 +43,7 @@ class _BsCategoryState extends State<BsCategory> {
     }
 
     return GestureDetector(
-      onTap: () => _categorySelected(),
+      onTap: () => _categorySelected(featureList),
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Row(
@@ -64,17 +85,15 @@ class _BsCategoryState extends State<BsCategory> {
     });
   }
 
-  _categorySelected() {
-    var categoryList = CategoryList().catList;
-
+  _categorySelected(List<FeaturesModel> fList) {
     var _widgets = [
       ListView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.only(top: 24.0),
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: categoryList.length,
+        itemCount: fList.length,
         itemBuilder: (_, i) {
-          var item = categoryList[i];
+          var item = fList[i];
           return ListTile(
             leading: Icon(
               item.icon.toIcon(),
@@ -104,6 +123,7 @@ class _BsCategoryState extends State<BsCategory> {
         trailing: const Icon(Icons.arrow_forward_ios_outlined, size: 25.0),
         onTap: () {
           Navigator.pop(context);
+          _createNewCategory();
         },
       ),
       ListTile(
@@ -115,15 +135,13 @@ class _BsCategoryState extends State<BsCategory> {
         trailing: const Icon(Icons.arrow_forward_ios_outlined, size: 25.0),
         onTap: () {
           Navigator.pop(context);
+          _adminCategory();
         },
       ),
     ];
 
     showModalBottomSheet(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-        top: Radius.circular(25.0),
-      )),
+      shape: Constants.bottomSheetBorder(),
       isScrollControlled: true,
       context: context,
       builder: (context) {
@@ -134,6 +152,31 @@ class _BsCategoryState extends State<BsCategory> {
           ),
         );
       },
+    );
+  }
+
+  _adminCategory() {
+    showModalBottomSheet(
+      shape: Constants.bottomSheetBorder(),
+      isDismissible: false,
+      context: context,
+      builder: (context) => const AdminCategory(),
+    );
+  }
+
+  _createNewCategory() {
+    var features = FeaturesModel(
+      id: fModel.id,
+      category: fModel.category,
+      color: fModel.color,
+      icon: fModel.icon,
+    );
+    showModalBottomSheet(
+      shape: Constants.bottomSheetBorder(),
+      isScrollControlled: true,
+      isDismissible: false,
+      context: context,
+      builder: (context) => CreateCategory(fModel: features),
     );
   }
 }
