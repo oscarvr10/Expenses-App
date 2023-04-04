@@ -1,7 +1,6 @@
-import 'package:exp_app/models/features_model.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
+import 'package:exp_app/models/features_model.dart';
 
 class DBFeatures {
   static Database? _database;
