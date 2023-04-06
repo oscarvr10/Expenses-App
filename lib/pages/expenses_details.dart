@@ -50,6 +50,8 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
   Widget build(BuildContext context) {
     final exProvider = context.read<ExpensesProvider>();
     final uiProvider = context.read<UIProvider>();
+    cList = context.watch<ExpensesProvider>().allExpensesList;
+
     double totalExpense = 0.0;
     bool hasData = false;
 
@@ -128,7 +130,13 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                               label: 'Borrar',
                             ),
                             SlidableAction(
-                              onPressed: (context) {},
+                              onPressed: (context) {
+                                Navigator.pushNamed(
+                                  context,
+                                  'add_expenses',
+                                  arguments: item,
+                                );
+                              },
                               backgroundColor: Colors.green,
                               foregroundColor: Colors.white,
                               icon: Icons.edit_outlined,

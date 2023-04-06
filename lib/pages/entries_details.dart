@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:exp_app/models/combined_model.dart';
 import 'package:exp_app/models/entries_model.dart';
 import 'package:exp_app/utils/extensions.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class EntriesDetails extends StatefulWidget {
 }
 
 class _EntriesDetailsState extends State<EntriesDetails> {
-  List<EntriesModel> etList = [];
+  List<CombinedModel> etList = [];
   final _scrollController = ScrollController();
   double _offset = 0;
 
@@ -35,7 +36,7 @@ class _EntriesDetailsState extends State<EntriesDetails> {
 
   @override
   void initState() {
-    etList = context.read<ExpensesProvider>().etList;
+    etList = context.read<ExpensesProvider>().allEntriesList;
 
     _scrollController.addListener(_listener);
     _max;
@@ -52,13 +53,14 @@ class _EntriesDetailsState extends State<EntriesDetails> {
   @override
   Widget build(BuildContext context) {
     final exProvider = context.read<ExpensesProvider>();
-    final uiProvider =
-        context.read<UIProvider>(); // final etList = exProvider.etList;
+    final uiProvider = context.read<UIProvider>();
+    etList = context.watch<ExpensesProvider>().allEntriesList;
+
     double totalEntries = 0.0;
     bool hasData = false;
 
     totalEntries = etList
-        .map((e) => e.entries)
+        .map((e) => e.amount)
         .fold(0.0, (previousValue, element) => previousValue + element);
 
     if (_offset > 0.90) _offset = 0.90;
@@ -132,7 +134,13 @@ class _EntriesDetailsState extends State<EntriesDetails> {
                               label: 'Borrar',
                             ),
                             SlidableAction(
-                              onPressed: (context) {},
+                              onPressed: (context) {
+                                Navigator.pushNamed(
+                                  context,
+                                  'add_entries',
+                                  arguments: item,
+                                );
+                              },
                               backgroundColor: Colors.green,
                               foregroundColor: Colors.white,
                               icon: Icons.edit_outlined,
@@ -168,13 +176,9 @@ class _EntriesDetailsState extends State<EntriesDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                getAmountFormat(item.entries),
+                                getAmountFormat(item.amount),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '${(100 * item.entries / totalEntries).toStringAsFixed(2)}%',
-                                style: const TextStyle(fontSize: 12.0),
                               ),
                             ],
                           ),

@@ -146,6 +146,7 @@ class ExpensesProvider extends ChangeNotifier {
               category: f.category,
               color: f.color,
               icon: f.icon,
+              link: e.link,
               id: e.id,
               amount: e.expense,
               comment: e.comment,
@@ -159,6 +160,25 @@ class ExpensesProvider extends ChangeNotifier {
     }
 
     return cList = [..._cModel];
+  }
+
+  List<CombinedModel> get allEntriesList {
+    List<CombinedModel> _etModel = [];
+
+    for (var et in etList) {
+      _etModel.add(
+        CombinedModel(
+          id: et.id,
+          amount: et.entries,
+          comment: et.comment,
+          year: et.year,
+          month: et.month,
+          day: et.day,
+        ),
+      );
+    }
+
+    return cList = [..._etModel];
   }
 
   List<CombinedModel> get groupItemsList {

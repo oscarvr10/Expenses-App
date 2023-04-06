@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 
 class SaveEtButton extends StatelessWidget {
   final CombinedModel cModel;
-  const SaveEtButton({super.key, required this.cModel});
+  final bool hasData;
+
+  const SaveEtButton({super.key, required this.cModel, required this.hasData});
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +20,27 @@ class SaveEtButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (cModel.amount != 0.0) {
-          exProvider.addNewEntry(cModel);
+          hasData
+              ? exProvider.updateEntry(cModel)
+              : exProvider.addNewEntry(cModel);
           Fluttertoast.showToast(
-              msg: 'Ingreso agregado correctamente.',
+              msg: hasData
+                  ? 'Ingreso editado correctamente.'
+                  : 'Ingreso agregado correctamente.',
               backgroundColor: Colors.green);
           uiProvider.bnbIndex = 0;
           Navigator.pop(context);
         } else if (cModel.amount == 0.0) {
           Fluttertoast.showToast(
-              msg: 'Debes agregar un monto para el ingreso.',
+              msg: 'Debes especificar un monto para el ingreso.',
               backgroundColor: Colors.red);
         }
       },
       child: SizedBox(
         height: 70.0,
         width: 170.0,
-        child: Constants.customButton(Colors.green, Colors.white, 'GUARDAR'),
+        child: Constants.customButton(
+            Colors.green, Colors.white, hasData ? 'EDITAR' : 'GUARDAR'),
       ),
     );
   }

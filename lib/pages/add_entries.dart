@@ -13,10 +13,21 @@ class AddEntries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CombinedModel cModel = CombinedModel();
+    bool hasData = false;
+
+    final editCModel =
+        ModalRoute.of(context)!.settings.arguments as CombinedModel?;
+
+    if (editCModel != null) {
+      cModel = editCModel;
+      hasData = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Ingreso'),
+        title: hasData
+            ? const Text('Editar Ingreso')
+            : const Text('Agregar Ingreso'),
         elevation: 0.0,
       ),
       body: Column(
@@ -37,6 +48,7 @@ class AddEntries extends StatelessWidget {
                     child: Center(
                         child: SaveEtButton(
                       cModel: cModel,
+                      hasData: hasData,
                     )),
                   ),
                 ],

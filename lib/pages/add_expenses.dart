@@ -14,10 +14,20 @@ class AddExpenses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CombinedModel cModel = CombinedModel();
+    bool hasData = false;
+
+    final editCModel =
+        ModalRoute.of(context)!.settings.arguments as CombinedModel?;
+
+    if (editCModel != null) {
+      cModel = editCModel;
+      hasData = true;
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Gasto'),
+        title:
+            hasData ? const Text('Editar Gasto') : const Text('Agregar Gasto'),
         elevation: 0.0,
       ),
       body: Column(
@@ -39,6 +49,7 @@ class AddExpenses extends StatelessWidget {
                     child: Center(
                         child: SaveButton(
                       cModel: cModel,
+                      hasData: hasData,
                     )),
                   ),
                 ],
