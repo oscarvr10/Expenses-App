@@ -1,9 +1,12 @@
 import 'dart:math';
 
+import 'package:exp_app/providers/expenses_provider.dart';
+import 'package:exp_app/utils/math_operations.dart';
 import 'package:exp_app/widgets/balance_page_wt/back_sheet.dart';
 import 'package:exp_app/widgets/balance_page_wt/custom_fab.dart';
 import 'package:exp_app/widgets/balance_page_wt/front_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/balance_page_wt/month_selector.dart';
 
@@ -43,6 +46,9 @@ class _BalancePageState extends State<BalancePage> {
 
   @override
   Widget build(BuildContext context) {
+    final eList = context.watch<ExpensesProvider>().eList;
+    final etList = context.watch<ExpensesProvider>().etList;
+
     return Scaffold(
       floatingActionButton: const CustomFAB(),
       body: CustomScrollView(
@@ -54,13 +60,13 @@ class _BalancePageState extends State<BalancePage> {
             flexibleSpace: FlexibleSpaceBar(
               background: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  MonthSelector(),
+                children: [
+                  const MonthSelector(),
                   Text(
-                    '\$ 2500.00',
-                    style: TextStyle(fontSize: 34.0, color: Colors.green),
+                    getBalance(eList, etList),
+                    style: const TextStyle(fontSize: 34.0, color: Colors.green),
                   ),
-                  Text('Balance', style: TextStyle(fontSize: 16.0))
+                  const Text('Balance', style: TextStyle(fontSize: 16.0))
                 ],
               ),
             ),

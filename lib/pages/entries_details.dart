@@ -1,22 +1,24 @@
 import 'dart:math';
-import 'package:exp_app/models/combined_model.dart';
-import 'package:exp_app/providers/expenses_provider.dart';
-import 'package:exp_app/utils/constants.dart';
+
+import 'package:exp_app/models/entries_model.dart';
 import 'package:exp_app/utils/extensions.dart';
-import 'package:exp_app/utils/math_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
-class ExpensesDetails extends StatefulWidget {
-  const ExpensesDetails({super.key});
+import '../providers/expenses_provider.dart';
+import '../utils/constants.dart';
+import '../utils/math_operations.dart';
+
+class EntriesDetails extends StatefulWidget {
+  const EntriesDetails({super.key});
 
   @override
-  State<ExpensesDetails> createState() => _ExpensesDetailsState();
+  State<EntriesDetails> createState() => _EntriesDetailsState();
 }
 
-class _ExpensesDetailsState extends State<ExpensesDetails> {
-  List<CombinedModel> cList = [];
+class _EntriesDetailsState extends State<EntriesDetails> {
+  List<EntriesModel> etList = [];
   final _scrollController = ScrollController();
   double _offset = 0;
 
@@ -31,7 +33,8 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
 
   @override
   void initState() {
-    cList = context.read<ExpensesProvider>().allExpensesList;
+    etList = context.read<ExpensesProvider>().etList;
+
     _scrollController.addListener(_listener);
     _max;
     super.initState();
@@ -47,17 +50,17 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
   @override
   Widget build(BuildContext context) {
     // final exProvider = context.watch<ExpensesProvider>();
-    // final cList = exProvider.allExpensesList;
-    double totalExpense = 0.0;
+    // final etList = exProvider.etList;
+    double totalEntries = 0.0;
     bool hasData = false;
 
-    totalExpense = cList
-        .map((e) => e.amount)
+    totalEntries = etList
+        .map((e) => e.entries)
         .fold(0.0, (previousValue, element) => previousValue + element);
 
     if (_offset > 0.90) _offset = 0.90;
 
-    if (cList.isNotEmpty) {
+    if (etList.isNotEmpty) {
       hasData = true;
     }
 
@@ -70,14 +73,14 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
             expandedHeight: 125.0,
             title: const Padding(
               padding: EdgeInsets.only(right: 60.0),
-              child: Text('Desglose de gastos'),
+              child: Text('Desglose de ingresos'),
             ),
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Align(
                 alignment: Alignment(_offset, 1),
                 child: Text(
-                  getAmountFormat(totalExpense),
+                  getAmountFormat(totalEntries),
                 ),
               ),
               centerTitle: true,
@@ -102,7 +105,7 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
               ? SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, i) {
-                      var item = cList[i];
+                      var item = etList[i];
                       return Slidable(
                         key: ValueKey(item),
                         startActionPane: ActionPane(
@@ -111,7 +114,7 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                             SlidableAction(
                               onPressed: (context) {
                                 setState(() {
-                                  cList.removeAt(i);
+                                  etList.removeAt(i);
                                 });
                               },
                               backgroundColor: Colors.red,
@@ -143,14 +146,10 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                             ],
                           ),
                           title: Row(
-                            children: [
-                              Text(item.category),
-                              const SizedBox(
+                            children: const [
+                              Text('Ingreso'),
+                              SizedBox(
                                 width: 8.0,
-                              ),
-                              Icon(
-                                item.icon.toIcon(),
-                                color: item.color.toColor(),
                               ),
                             ],
                           ),
@@ -160,12 +159,12 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                getAmountFormat(item.amount),
+                                getAmountFormat(item.entries),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                '${(100 * item.amount / totalExpense).toStringAsFixed(2)}%',
+                                '${(100 * item.entries / totalEntries).toStringAsFixed(2)}%',
                                 style: const TextStyle(fontSize: 12.0),
                               ),
                             ],
@@ -173,7 +172,7 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                         ),
                       );
                     },
-                    childCount: cList.length,
+                    childCount: etList.length,
                   ),
                 )
               : SliverToBoxAdapter(
@@ -185,7 +184,7 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                         child: Image.asset('assets/empty.png'),
                       ),
                       const Text(
-                        'No hay gastos para mostrar.\nAgrega uno nuevo',
+                        'No hay ingresos para mostrar.\nAgrega uno nuevo',
                         maxLines: 2,
                         style: TextStyle(
                           fontSize: 14.0,
