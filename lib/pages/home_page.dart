@@ -24,15 +24,17 @@ class _HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uiProvider = Provider.of<UiProvider>(context);
+    final uiProvider = Provider.of<UIProvider>(context);
     // final expProvider = Provider.of<ExpensesProvider>(context, listen: false);
     final expProvider = context.read<ExpensesProvider>();
-    final currentIndex = uiProvider.bnbIndex;
     final DateTime _currentDate = DateTime.now();
+
+    final currentIndex = uiProvider.bnbIndex;
+    final currentMonth = uiProvider.selectedMonth + 1;
 
     switch (currentIndex) {
       case 0:
-        expProvider.getExpensesByDate(_currentDate.month, _currentDate.year);
+        expProvider.getExpensesByDate(currentMonth, _currentDate.year);
         expProvider.getAllFeatures();
         return const BalancePage();
       case 1:

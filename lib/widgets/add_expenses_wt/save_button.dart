@@ -1,5 +1,6 @@
 import 'package:exp_app/models/combined_model.dart';
 import 'package:exp_app/providers/expenses_provider.dart';
+import 'package:exp_app/providers/ui_provider.dart';
 import 'package:exp_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +13,7 @@ class SaveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exProvider = context.read<ExpensesProvider>();
+    final uiProvider = context.read<UIProvider>();
 
     return GestureDetector(
       onTap: () {
@@ -20,6 +22,8 @@ class SaveButton extends StatelessWidget {
           Fluttertoast.showToast(
               msg: 'Gasto agregado correctamente.',
               backgroundColor: Colors.green);
+          uiProvider.bnbIndex = 0;
+          Navigator.pop(context);
         } else if (cModel.amount == 0.0) {
           Fluttertoast.showToast(
               msg: 'Debes agregar un monto para el gasto.',

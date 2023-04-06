@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:exp_app/models/combined_model.dart';
 import 'package:exp_app/models/expenses_model.dart';
 import 'package:exp_app/models/features_model.dart';
@@ -96,20 +98,51 @@ class ExpensesProvider extends ChangeNotifier {
     for (var e in eList) {
       for (var f in fList) {
         if (e.link == f.id) {
-          _cModel.add(CombinedModel(
-            category: f.category,
-            color: f.color,
-            icon: f.icon,
-            id: e.id,
-            amount: e.expense,
-            comment: e.comment,
-            year: e.year,
-            month: e.month,
-            day: e.day,
-          ));
+          _cModel.add(
+            CombinedModel(
+              category: f.category,
+              color: f.color,
+              icon: f.icon,
+              id: e.id,
+              amount: e.expense,
+              comment: e.comment,
+              year: e.year,
+              month: e.month,
+              day: e.day,
+            ),
+          );
         }
       }
     }
+
+    return cList = [..._cModel];
+  }
+
+  List<CombinedModel> get groupItemsList {
+    List<CombinedModel> _cModel = [];
+
+    for (var e in eList) {
+      for (var f in fList) {
+        if (e.link == f.id) {
+          double _amount = eList
+              .where((e) => e.link == f.id)
+              .fold(0.0, (previousValue, e) => previousValue + e.expense);
+          _cModel.add(
+            CombinedModel(
+              category: f.category,
+              color: f.color,
+              icon: f.icon,
+              amount: _amount,
+            ),
+          );
+        }
+      }
+    }
+
+    var encode = _cModel.map((e) => jsonEncode(e));
+    var unique = encode.toSet();
+    var result = unique.map((e) => jsonDecode(e));
+    _cModel = result.map((e) => CombinedModel.fromJson(e)).toList();
 
     return cList = [..._cModel];
   }

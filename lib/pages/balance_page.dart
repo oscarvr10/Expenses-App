@@ -5,6 +5,8 @@ import 'package:exp_app/widgets/balance_page_wt/custom_fab.dart';
 import 'package:exp_app/widgets/balance_page_wt/front_sheet.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/balance_page_wt/month_selector.dart';
+
 class BalancePage extends StatefulWidget {
   const BalancePage({super.key});
 
@@ -48,11 +50,12 @@ class _BalancePageState extends State<BalancePage> {
         slivers: [
           SliverAppBar(
             elevation: 0.0,
-            expandedHeight: 130.0,
+            expandedHeight: 150.0,
             flexibleSpace: FlexibleSpaceBar(
               background: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
+                  MonthSelector(),
                   Text(
                     '\$ 2500.00',
                     style: TextStyle(fontSize: 34.0, color: Colors.green),
