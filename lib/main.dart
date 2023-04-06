@@ -11,7 +11,7 @@ import 'pages/home_page.dart';
 void main() => runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => UiProvider()),
+          ChangeNotifierProvider(create: (_) => UIProvider()),
           ChangeNotifierProvider(create: (_) => ExpensesProvider()),
         ],
         child: const MyApp(),

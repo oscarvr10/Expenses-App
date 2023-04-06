@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:exp_app/models/combined_model.dart';
+import 'package:exp_app/models/entries_model.dart';
 import 'package:exp_app/models/expenses_model.dart';
 import 'package:exp_app/models/features_model.dart';
 import 'package:exp_app/providers/db_expenses.dart';
@@ -11,6 +12,7 @@ class ExpensesProvider extends ChangeNotifier {
   List<FeaturesModel> fList = [];
   List<ExpensesModel> eList = [];
   List<CombinedModel> cList = [];
+  List<EntriesModel> etList = [];
 
 /* 
   ---- Functions to insert ----
@@ -40,6 +42,22 @@ class ExpensesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  addNewEntry(CombinedModel cModel) async {
+    var entries = EntriesModel(
+      year: cModel.year,
+      month: cModel.month,
+      day: cModel.day,
+      comment: cModel.comment,
+      entries: cModel.amount,
+    );
+
+    final id = await DBExpenses.db.addNewEntry(entries);
+    entries.id = id;
+
+    etList.add(entries);
+    notifyListeners();
+  }
+
   /* 
     ---- Functions to read ----
   */
@@ -54,6 +72,13 @@ class ExpensesProvider extends ChangeNotifier {
     final response = await DBExpenses.db.getExpenseByDate(month, year);
 
     eList = [...response];
+    notifyListeners();
+  }
+
+  getEntriesByDate(int month, int year) async {
+    final response = await DBExpenses.db.getEntriesByDate(month, year);
+
+    etList = [...response];
     notifyListeners();
   }
 
@@ -79,12 +104,30 @@ class ExpensesProvider extends ChangeNotifier {
     await DBExpenses.db.updateExpense(expenses);
   }
 
+  updateEntry(CombinedModel cModel) async {
+    var entries = EntriesModel(
+      id: cModel.id,
+      year: cModel.year,
+      month: cModel.month,
+      day: cModel.day,
+      comment: cModel.comment,
+      entries: cModel.amount,
+    );
+
+    await DBExpenses.db.updateEntry(entries);
+  }
+
   /* 
     ---- Functions to delete ----
   */
 
   deleteExpense(int id) async {
     await DBExpenses.db.deleteExpense(id);
+    notifyListeners();
+  }
+
+  deleteEntry(int id) async {
+    await DBExpenses.db.deleteEntry(id);
     notifyListeners();
   }
 
