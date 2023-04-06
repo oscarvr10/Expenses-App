@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:exp_app/models/combined_model.dart';
 import 'package:exp_app/providers/expenses_provider.dart';
+import 'package:exp_app/providers/ui_provider.dart';
 import 'package:exp_app/utils/constants.dart';
 import 'package:exp_app/utils/extensions.dart';
 import 'package:exp_app/utils/math_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class ExpensesDetails extends StatefulWidget {
@@ -46,8 +48,8 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
 
   @override
   Widget build(BuildContext context) {
-    // final exProvider = context.watch<ExpensesProvider>();
-    // final cList = exProvider.allExpensesList;
+    final exProvider = context.read<ExpensesProvider>();
+    final uiProvider = context.read<UIProvider>();
     double totalExpense = 0.0;
     bool hasData = false;
 
@@ -112,6 +114,12 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                               onPressed: (context) {
                                 setState(() {
                                   cList.removeAt(i);
+                                  exProvider.deleteExpense(item.id!);
+                                  uiProvider.bnbIndex = 0;
+                                  Fluttertoast.showToast(
+                                    msg: 'Gasto eliminado correctamente',
+                                    backgroundColor: Colors.red,
+                                  );
                                 });
                               },
                               backgroundColor: Colors.red,

@@ -4,9 +4,11 @@ import 'package:exp_app/models/entries_model.dart';
 import 'package:exp_app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/expenses_provider.dart';
+import '../providers/ui_provider.dart';
 import '../utils/constants.dart';
 import '../utils/math_operations.dart';
 
@@ -49,8 +51,9 @@ class _EntriesDetailsState extends State<EntriesDetails> {
 
   @override
   Widget build(BuildContext context) {
-    // final exProvider = context.watch<ExpensesProvider>();
-    // final etList = exProvider.etList;
+    final exProvider = context.read<ExpensesProvider>();
+    final uiProvider =
+        context.read<UIProvider>(); // final etList = exProvider.etList;
     double totalEntries = 0.0;
     bool hasData = false;
 
@@ -115,6 +118,12 @@ class _EntriesDetailsState extends State<EntriesDetails> {
                               onPressed: (context) {
                                 setState(() {
                                   etList.removeAt(i);
+                                  exProvider.deleteEntry(item.id!);
+                                  uiProvider.bnbIndex = 0;
+                                  Fluttertoast.showToast(
+                                    msg: 'Ingreso eliminado correctamente',
+                                    backgroundColor: Colors.red,
+                                  );
                                 });
                               },
                               backgroundColor: Colors.red,
