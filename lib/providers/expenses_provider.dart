@@ -135,7 +135,7 @@ class ExpensesProvider extends ChangeNotifier {
     ---- Getters to combined lists ----
   */
 
-  List<CombinedModel> get allItemsList {
+  List<CombinedModel> get allExpensesList {
     List<CombinedModel> _cModel = [];
 
     for (var e in eList) {
