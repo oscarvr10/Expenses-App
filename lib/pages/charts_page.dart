@@ -1,4 +1,6 @@
 import 'package:exp_app/widgets/charts_page_wt/chart_line.dart';
+import 'package:exp_app/widgets/charts_page_wt/chart_pie.dart';
+import 'package:exp_app/widgets/charts_page_wt/chart_scatterplot.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/constants.dart';
@@ -27,7 +29,9 @@ class ChartsPage extends StatelessWidget {
                   children: const [
                     Text('Selector'),
                     Expanded(
-                      child: ChartLine(),
+                      // child: ChartLine(),
+                      // child: ChartPie(),
+                      child: ChartScatterPlot(),
                     ),
                   ],
                 ),

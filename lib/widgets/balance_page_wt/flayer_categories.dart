@@ -12,7 +12,7 @@ class FlayerCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exProvider = context.watch<ExpensesProvider>();
-    final gList = exProvider.groupItemsList;
+    final gList = exProvider.groupExpensesList;
     List<CombinedModel> limitList = [];
     bool hasLimit = false;
 

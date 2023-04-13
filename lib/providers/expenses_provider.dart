@@ -181,7 +181,7 @@ class ExpensesProvider extends ChangeNotifier {
     return cList = [..._etModel];
   }
 
-  List<CombinedModel> get groupItemsList {
+  List<CombinedModel> get groupExpensesList {
     List<CombinedModel> _cModel = [];
 
     for (var e in eList) {
