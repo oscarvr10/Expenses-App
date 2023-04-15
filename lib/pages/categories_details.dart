@@ -27,6 +27,7 @@ class _CategoriesDetailsState extends State<CategoriesDetails> {
     var totalExpenses = getAmountFormat(getTotalExpenses(eList));
 
     cList = cList.where((e) => e.category == cModel!.category).toList();
+    cList.sort((a, b) => b.day.compareTo(a.day));
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColorDark,

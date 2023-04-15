@@ -67,6 +67,7 @@ class _EntriesDetailsState extends State<EntriesDetails> {
 
     if (etList.isNotEmpty) {
       hasData = true;
+      etList.sort((a, b) => b.day.compareTo(a.day));
     }
 
     return Scaffold(

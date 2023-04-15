@@ -27,7 +27,7 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
   void _listener() {
     setState(() {
       _offset = _scrollController.offset / 100;
-      print(_max);
+      if (_offset > 0.90) _offset = 0.90;
     });
   }
 
@@ -48,21 +48,25 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final dataDay = ModalRoute.of(context)!.settings.arguments as int?;
     final exProvider = context.read<ExpensesProvider>();
     final uiProvider = context.read<UIProvider>();
     cList = context.watch<ExpensesProvider>().allExpensesList;
 
     double totalExpense = 0.0;
+
+    if (dataDay != null) {
+      cList = cList.where((e) => e.day == dataDay).toList();
+    }
     bool hasData = false;
 
     totalExpense = cList
         .map((e) => e.amount)
         .fold(0.0, (previousValue, element) => previousValue + element);
 
-    if (_offset > 0.90) _offset = 0.90;
-
     if (cList.isNotEmpty) {
       hasData = true;
+      cList.sort((a, b) => b.day.compareTo(a.day));
     }
 
     return Scaffold(

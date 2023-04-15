@@ -45,7 +45,7 @@ class _ChartScatterPlotState extends State<ChartScatterPlot> {
       children: [
         Positioned(
           top: -1,
-          left: 20,
+          left: 35,
           child: Text('Día: $catDay'),
         ),
         Positioned(
@@ -53,51 +53,54 @@ class _ChartScatterPlotState extends State<ChartScatterPlot> {
           right: 40,
           child: Text('$catName: ${getAmountFormat(catAmount)}'),
         ),
-        charts.ScatterPlotChart(
-          _series(cList, maxExp, _index),
-          animate: _animated,
-          primaryMeasureAxis: charts.NumericAxisSpec(
-            tickFormatterSpec:
-                charts.BasicNumericTickFormatterSpec.fromNumberFormat(
-              NumberFormat.simpleCurrency(
-                decimalDigits: 0,
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: charts.ScatterPlotChart(
+            _series(cList, maxExp, _index),
+            animate: _animated,
+            primaryMeasureAxis: charts.NumericAxisSpec(
+              tickFormatterSpec:
+                  charts.BasicNumericTickFormatterSpec.fromNumberFormat(
+                NumberFormat.simpleCurrency(
+                  decimalDigits: 0,
+                ),
+              ),
+              tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                desiredTickCount: 6,
               ),
             ),
-            tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-              desiredTickCount: 6,
+            domainAxis: charts.NumericAxisSpec(
+              tickProviderSpec: charts.StaticNumericTickProviderSpec([
+                const charts.TickSpec(0, label: '0'),
+                const charts.TickSpec(5, label: '5'),
+                const charts.TickSpec(10, label: '10'),
+                const charts.TickSpec(15, label: '15'),
+                const charts.TickSpec(20, label: '20'),
+                const charts.TickSpec(25, label: '25'),
+                charts.TickSpec(currentDay, label: '$currentDay'),
+              ]),
             ),
+            selectionModels: [
+              charts.SelectionModelConfig(
+                changedListener: (model) {
+                  if (model.hasDatumSelection) {
+                    setState(() {
+                      _animated = false;
+                      _index = model.selectedDatum[0].index!;
+                      catName = model.selectedSeries[0]
+                          .labelAccessorFn!(model.selectedDatum[0].index);
+                      catAmount = model.selectedSeries[0]
+                          .measureFn(model.selectedDatum[0].index)!
+                          .toDouble();
+                      catDay = model.selectedSeries[0]
+                          .domainFn(model.selectedDatum[0].index)
+                          .toInt();
+                    });
+                  }
+                },
+              ),
+            ],
           ),
-          domainAxis: charts.NumericAxisSpec(
-            tickProviderSpec: charts.StaticNumericTickProviderSpec([
-              const charts.TickSpec(0, label: '0'),
-              const charts.TickSpec(5, label: '5'),
-              const charts.TickSpec(10, label: '10'),
-              const charts.TickSpec(15, label: '15'),
-              const charts.TickSpec(20, label: '20'),
-              const charts.TickSpec(25, label: '25'),
-              charts.TickSpec(currentDay, label: '$currentDay'),
-            ]),
-          ),
-          selectionModels: [
-            charts.SelectionModelConfig(
-              changedListener: (model) {
-                if (model.hasDatumSelection) {
-                  setState(() {
-                    _animated = false;
-                    _index = model.selectedDatum[0].index!;
-                    catName = model.selectedSeries[0]
-                        .labelAccessorFn!(model.selectedDatum[0].index);
-                    catAmount = model.selectedSeries[0]
-                        .measureFn(model.selectedDatum[0].index)!
-                        .toDouble();
-                    catDay = model.selectedSeries[0]
-                        .domainFn(model.selectedDatum[0].index)
-                        .toInt();
-                  });
-                }
-              },
-            ),
-          ],
         ),
       ],
     );
