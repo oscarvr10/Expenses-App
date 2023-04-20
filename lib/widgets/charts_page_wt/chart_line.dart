@@ -23,7 +23,7 @@ class ChartLine extends StatelessWidget {
     var currentMonth = context.watch<UIProvider>().selectedMonth + 1;
     List<ExpensesModel> eModel = [];
     Map<int, dynamic> mapExp;
-    List<double> perDayList = [];
+    // List<double> perDayList = [];
 
     // Chart with Map
     mapExp = eList.fold({}, (Map<int, dynamic> map, exp) {

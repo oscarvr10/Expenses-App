@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:exp_app/pages/entries_details.dart';
 import 'package:exp_app/pages/expenses_details.dart';
 import 'package:exp_app/utils/constants.dart';

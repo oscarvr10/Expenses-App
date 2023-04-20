@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:exp_app/models/features_model.dart';
 import 'package:exp_app/providers/expenses_provider.dart';
 import 'package:exp_app/utils/extensions.dart';
