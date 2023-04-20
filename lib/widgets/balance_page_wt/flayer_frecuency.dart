@@ -1,8 +1,6 @@
 import 'package:exp_app/widgets/charts_page_wt/chart_line.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../providers/expenses_provider.dart';
 import '../../providers/ui_provider.dart';
 
 class FlayerFrecuency extends StatelessWidget {

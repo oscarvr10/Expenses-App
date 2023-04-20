@@ -12,11 +12,11 @@ class FlayerMovements extends StatelessWidget {
   Widget build(BuildContext context) {
     final eList = context.watch<ExpensesProvider>().eList;
     final etList = context.watch<ExpensesProvider>().etList;
-    double _totalExp = 0.0;
-    double _totalEt = 0.0;
+    double totalExp = 0.0;
+    double totalEt = 0.0;
 
-    _totalExp = getTotalExpenses(eList);
-    _totalEt = getTotalEntries(etList);
+    totalExp = getTotalExpenses(eList);
+    totalEt = getTotalEntries(etList);
 
     return SizedBox(
       height: 180.0,
@@ -26,7 +26,7 @@ class FlayerMovements extends StatelessWidget {
           Expanded(
             flex: 1,
             child: PercentCircular(
-              percent: _totalExp / _totalEt,
+              percent: totalExp / totalEt,
               radius: 70.0,
               color: Colors.green,
               arcType: ArcType.FULL,
@@ -50,14 +50,14 @@ class FlayerMovements extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    getAmountFormat(_totalExp),
+                    getAmountFormat(totalExp),
                     style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'Absorbe un ${(_totalExp / _totalEt * 100).toStringAsFixed(2)}% de tus ingresos',
+                    'Absorbe un ${(totalExp / totalEt * 100).toStringAsFixed(2)}% de tus ingresos',
                     style: const TextStyle(
                       fontSize: 14.0,
                     ),

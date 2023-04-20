@@ -14,11 +14,11 @@ class ChartsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentChart = context.watch<UIProvider>().selectedChart;
-    bool _isPerDay = false;
+    bool isPerDay = false;
 
     if (currentChart == 'Gráfico Lineal' ||
         currentChart == 'Gráfico de Dispersión') {
-      _isPerDay = true;
+      isPerDay = true;
     }
 
     return Scaffold(
@@ -58,7 +58,7 @@ class ChartsPage extends StatelessWidget {
               ),
             ),
           ),
-          _isPerDay ? const PerDayList() : const PerCategoryList(),
+          isPerDay ? const PerDayList() : const PerCategoryList(),
         ],
       ),
     );

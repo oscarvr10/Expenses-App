@@ -28,19 +28,19 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime _date = DateTime.now();
-    var _widgets = <Widget>[];
+    DateTime date = DateTime.now();
+    var widgets = <Widget>[];
 
-    _widgets.insert(0, const Icon(Icons.date_range_outlined, size: 35.0));
-    _widgets.insert(1, const SizedBox(width: 4));
+    widgets.insert(0, const Icon(Icons.date_range_outlined, size: 35.0));
+    widgets.insert(1, const SizedBox(width: 4));
 
     _calendar() {
       showDatePicker(
         context: context,
         locale: const Locale('es', 'ES'),
-        initialDate: _date.subtract(const Duration(days: 2)),
-        firstDate: _date.subtract(const Duration(days: 30)),
-        lastDate: _date.subtract(const Duration(days: 2)),
+        initialDate: date.subtract(const Duration(days: 2)),
+        firstDate: date.subtract(const Duration(days: 30)),
+        lastDate: date.subtract(const Duration(days: 2)),
       ).then((value) {
         setState(() {
           if (value != null) {
@@ -57,14 +57,14 @@ class _DatePickerState extends State<DatePicker> {
     }
 
     Map<String, DateTime> items = {
-      'Hoy': _date,
-      'Ayer': _date.subtract(const Duration(hours: 24)),
-      'Otro': _date
+      'Hoy': date,
+      'Ayer': date.subtract(const Duration(hours: 24)),
+      'Otro': date
     };
 
     items.forEach(
       (name, date) {
-        _widgets.add(
+        widgets.add(
           Expanded(
             child: GestureDetector(
               onTap: () {
@@ -89,7 +89,7 @@ class _DatePickerState extends State<DatePicker> {
     );
     return Padding(
       padding: const EdgeInsets.all(18.0),
-      child: Row(children: _widgets),
+      child: Row(children: widgets),
     );
   }
 }

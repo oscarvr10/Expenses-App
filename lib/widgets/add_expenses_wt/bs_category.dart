@@ -87,7 +87,7 @@ class _BsCategoryState extends State<BsCategory> {
   }
 
   _categorySelected(List<FeaturesModel> fList) {
-    var _widgets = [
+    var widgets = [
       ListView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.only(top: 24.0),
@@ -150,7 +150,7 @@ class _BsCategoryState extends State<BsCategory> {
         return SizedBox(
           height: MediaQuery.of(context).size.height / 1.7,
           child: ListView(
-            children: _widgets,
+            children: widgets,
           ),
         );
       },

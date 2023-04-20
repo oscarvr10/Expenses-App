@@ -10,28 +10,28 @@ getAmountFormat(double amount) {
 }
 
 getTotalExpenses(List<ExpensesModel> expenses) {
-  double _eList = expenses
+  double eList = expenses
       .map((e) => e.expense)
       .fold(0.0, (previousValue, element) => previousValue + element);
 
-  return _eList;
+  return eList;
 }
 
 getTotalEntries(List<EntriesModel> entries) {
-  double _etList = entries
+  double etList = entries
       .map((e) => e.entries)
       .fold(0.0, (previousValue, element) => previousValue + element);
 
-  return _etList;
+  return etList;
 }
 
 getBalance(List<ExpensesModel> expenses, List<EntriesModel> entries) {
-  double _balance = getTotalEntries(entries) - getTotalExpenses(expenses);
-  return getAmountFormat(_balance);
+  double balance = getTotalEntries(entries) - getTotalExpenses(expenses);
+  return getAmountFormat(balance);
 }
 
 String getMonthName(int month) {
-  Map<int, String> _monthsMap = {
+  Map<int, String> monthsMap = {
     1: 'Enero',
     2: 'Febrero',
     3: 'Marzo',
@@ -46,5 +46,5 @@ String getMonthName(int month) {
     12: 'Diciembre',
   };
 
-  return _monthsMap[month]!;
+  return monthsMap[month]!;
 }

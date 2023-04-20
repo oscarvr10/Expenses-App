@@ -1,8 +1,5 @@
 import 'dart:math';
-
 import 'package:exp_app/models/combined_model.dart';
-import 'package:exp_app/models/entries_model.dart';
-import 'package:exp_app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -30,7 +27,6 @@ class _EntriesDetailsState extends State<EntriesDetails> {
   void _listener() {
     setState(() {
       _offset = _scrollController.offset / 100;
-      print(_max);
     });
   }
 

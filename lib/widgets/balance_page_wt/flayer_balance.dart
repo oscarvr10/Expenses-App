@@ -11,13 +11,13 @@ class FlayerBalance extends StatelessWidget {
   Widget build(BuildContext context) {
     final eList = context.watch<ExpensesProvider>().eList;
     final etList = context.watch<ExpensesProvider>().etList;
-    double _totalExp = 0.0;
-    double _totalEt = 0.0;
-    double _total = 0.0;
+    double totalExp = 0.0;
+    double totalEt = 0.0;
+    double total = 0.0;
 
-    _totalExp = getTotalExpenses(eList);
-    _totalEt = getTotalEntries(etList);
-    _total = _totalEt - _totalExp;
+    totalExp = getTotalExpenses(eList);
+    totalEt = getTotalEntries(etList);
+    total = totalEt - totalExp;
 
     return Row(
       children: [
@@ -33,7 +33,7 @@ class FlayerBalance extends StatelessWidget {
                 ),
                 title: const Text('Ingresos'),
                 trailing: Text(
-                  getAmountFormat(_totalEt),
+                  getAmountFormat(totalEt),
                   style: const TextStyle(color: Colors.green),
                 ),
               ),
@@ -44,7 +44,7 @@ class FlayerBalance extends StatelessWidget {
                 ),
                 title: const Text('Gastos'),
                 trailing: Text(
-                  getAmountFormat(_totalExp),
+                  getAmountFormat(totalExp),
                   style: const TextStyle(color: Colors.red),
                 ),
               ),
@@ -62,7 +62,7 @@ class FlayerBalance extends StatelessWidget {
                 trailing: Text(
                   getBalance(eList, etList),
                   style: TextStyle(
-                    color: _total < 0 ? Colors.red : Colors.green,
+                    color: total < 0 ? Colors.red : Colors.green,
                   ),
                 ),
               ),

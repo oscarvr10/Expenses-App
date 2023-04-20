@@ -6,8 +6,8 @@ import 'package:exp_app/utils/extensions.dart';
 import 'package:exp_app/utils/math_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter/src/text_element.dart' as txtElement;
-import 'package:charts_flutter/src/text_style.dart' as txtStyle;
+import 'package:charts_flutter/src/text_element.dart' as txt_element;
+import 'package:charts_flutter/src/text_style.dart' as txt_style;
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -52,28 +52,27 @@ class ChartLine extends StatelessWidget {
 
     // Chart with doubles
     var currentDay = daysInMonth(currentMonth);
-    print(currentDay);
 
-    perDayList = List.generate(currentDay + 1, (i) {
-      return eList
-          .where((e) => e.day == i)
-          .map((e) => e.expense)
-          .fold(0.0, (previousValue, element) => previousValue + element);
-    });
+    // perDayList = List.generate(currentDay + 1, (i) {
+    //   return eList
+    //       .where((e) => e.day == i)
+    //       .map((e) => e.expense)
+    //       .fold(0.0, (previousValue, element) => previousValue + element);
+    // });
 
-    List<charts.Series<double, int>> series2 = [
-      charts.Series<double, int>(
-        id: 'ExpensesPerDay',
-        domainFn: (v, i) => i!,
-        measureFn: (v, i) => v,
-        seriesColor: charts.MaterialPalette.green.shadeDefault,
-        radiusPxFn: (v, i) {
-          if (v == 0.0) return 0;
-          return 4;
-        },
-        data: perDayList,
-      )
-    ];
+    // List<charts.Series<double, int>> series2 = [
+    //   charts.Series<double, int>(
+    //     id: 'ExpensesPerDay',
+    //     domainFn: (v, i) => i!,
+    //     measureFn: (v, i) => v,
+    //     seriesColor: charts.MaterialPalette.green.shadeDefault,
+    //     radiusPxFn: (v, i) {
+    //       if (v == 0.0) return 0;
+    //       return 4;
+    //     },
+    //     data: perDayList,
+    //   )
+    // ];
 
     return SizedBox(
       child: charts.LineChart(
@@ -150,7 +149,7 @@ class ChartLine extends StatelessWidget {
 }
 
 class SymbolRender extends charts.CircleSymbolRenderer {
-  var style = txtStyle.TextStyle();
+  var style = txt_style.TextStyle();
 
   @override
   void paint(
@@ -189,7 +188,7 @@ class SymbolRender extends charts.CircleSymbolRenderer {
     style.fontWeight = 'bold';
 
     canvas.drawText(
-      txtElement.TextElement(
+      txt_element.TextElement(
         'Día ${ChartLine.pointDay}\n${ChartLine.pointAmount}',
         style: style,
       ),

@@ -48,20 +48,20 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
     );
   }
 
-  _num(String _text, double _height) {
+  _num(String text, double height) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
         setState(() {
-          amount += _text;
+          amount += text;
           widget.cModel.amount = double.parse(amount);
         });
       },
       child: SizedBox(
-        height: _height,
+        height: height,
         child: Center(
           child: Text(
-            _text,
+            text,
             style: const TextStyle(
               fontSize: 35.0,
             ),
@@ -96,7 +96,7 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
               height: 350.0,
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-                  var _height = constraints.biggest.height / 6;
+                  var height = constraints.biggest.height / 6;
                   return Column(
                     children: [
                       Table(
@@ -109,29 +109,29 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
                         children: [
                           TableRow(
                             children: [
-                              _num('1', _height),
-                              _num('2', _height),
-                              _num('3', _height),
+                              _num('1', height),
+                              _num('2', height),
+                              _num('3', height),
                             ],
                           ),
                           TableRow(
                             children: [
-                              _num('4', _height),
-                              _num('5', _height),
-                              _num('6', _height),
+                              _num('4', height),
+                              _num('5', height),
+                              _num('6', height),
                             ],
                           ),
                           TableRow(
                             children: [
-                              _num('7', _height),
-                              _num('8', _height),
-                              _num('9', _height),
+                              _num('7', height),
+                              _num('8', height),
+                              _num('9', height),
                             ],
                           ),
                           TableRow(
                             children: [
-                              _num('.', _height),
-                              _num('0', _height),
+                              _num('.', height),
+                              _num('0', height),
                               GestureDetector(
                                 behavior: HitTestBehavior.opaque,
                                 onTap: () {
@@ -150,7 +150,7 @@ class _BSNumKeyboardState extends State<BSNumKeyboard> {
                                   });
                                 },
                                 child: SizedBox(
-                                  height: _height,
+                                  height: height,
                                   child: const Icon(
                                     Icons.backspace,
                                     size: 35.0,

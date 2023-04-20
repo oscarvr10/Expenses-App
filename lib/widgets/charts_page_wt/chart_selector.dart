@@ -16,7 +16,7 @@ class _ChartSelectorState extends State<ChartSelector> {
     final currentChart = context.watch<UIProvider>().selectedChart;
     final uiProvider = context.read<UIProvider>();
 
-    var _widgets = <Widget>[];
+    var widgets = <Widget>[];
 
     Map<String, IconData> typeChart = {
       'Gráfico Lineal': Icons.show_chart_outlined,
@@ -26,7 +26,7 @@ class _ChartSelectorState extends State<ChartSelector> {
 
     typeChart.forEach(
       (name, icon) {
-        _widgets.add(
+        widgets.add(
           GestureDetector(
             onTap: () {
               setState(() {
@@ -45,7 +45,7 @@ class _ChartSelectorState extends State<ChartSelector> {
       padding: const EdgeInsets.only(top: 8.0, bottom: 25.0),
       child: Wrap(
         spacing: 8.0,
-        children: _widgets,
+        children: widgets,
       ),
     );
   }

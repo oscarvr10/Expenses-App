@@ -10,7 +10,7 @@ class MonthSelector extends StatelessWidget {
     final uiProvider = context.read<UIProvider>();
     int currentPage = context.watch<UIProvider>().selectedMonth;
 
-    PageController _controller = PageController(
+    PageController controller = PageController(
       initialPage: currentPage,
       viewportFraction: 0.4,
     );
@@ -21,7 +21,7 @@ class MonthSelector extends StatelessWidget {
         onPageChanged: (int i) {
           uiProvider.selectedMonth = i;
         },
-        controller: _controller,
+        controller: controller,
         children: [
           _pageItems('Enero', 0, currentPage),
           _pageItems('Febrero', 1, currentPage),
@@ -41,7 +41,7 @@ class MonthSelector extends StatelessWidget {
   }
 
   _pageItems(String name, int position, int currentPage) {
-    var _alignment = Alignment.center;
+    var alignment = Alignment.center;
 
     const selected = TextStyle(
       fontSize: 22.0,
@@ -53,15 +53,15 @@ class MonthSelector extends StatelessWidget {
     );
 
     if (position == currentPage) {
-      _alignment = Alignment.center;
+      alignment = Alignment.center;
     } else if (position > currentPage) {
-      _alignment = Alignment.centerRight / 2;
+      alignment = Alignment.centerRight / 2;
     } else {
-      _alignment = Alignment.centerLeft / 2;
+      alignment = Alignment.centerLeft / 2;
     }
 
     return Align(
-      alignment: _alignment,
+      alignment: alignment,
       child: Text(
         name,
         style: position == currentPage ? selected : unselected,

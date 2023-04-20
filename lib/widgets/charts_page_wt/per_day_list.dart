@@ -12,10 +12,10 @@ class PerDayList extends StatelessWidget {
   Widget build(BuildContext context) {
     final eList = context.watch<ExpensesProvider>().eList;
     final selectedMonth = context.read<UIProvider>().selectedMonth + 1;
-    List<CombinedModel> _perDay = [];
-    Map<dynamic, dynamic> _perDayMap;
+    List<CombinedModel> perDay = [];
+    Map<dynamic, dynamic> perDayMap;
 
-    _perDayMap = eList.fold({}, (Map<dynamic, dynamic> map, exp) {
+    perDayMap = eList.fold({}, (Map<dynamic, dynamic> map, exp) {
       if (!map.containsKey(exp.day)) {
         map[exp.day] = 0;
       }
@@ -23,15 +23,15 @@ class PerDayList extends StatelessWidget {
       return map;
     });
 
-    _perDayMap.forEach((day, expense) {
-      _perDay.add(CombinedModel(day: day, amount: expense));
+    perDayMap.forEach((day, expense) {
+      perDay.add(CombinedModel(day: day, amount: expense));
     });
-    _perDay.sort((a, b) => b.day.compareTo(a.day));
+    perDay.sort((a, b) => b.day.compareTo(a.day));
 
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
         (context, i) {
-          var item = _perDay[i];
+          var item = perDay[i];
 
           return GestureDetector(
             onTap: () {
@@ -69,7 +69,7 @@ class PerDayList extends StatelessWidget {
             ),
           );
         },
-        childCount: _perDay.length,
+        childCount: perDay.length,
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,

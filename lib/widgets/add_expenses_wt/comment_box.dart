@@ -7,7 +7,7 @@ class CommentBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _text = cModel.comment;
+    String text = cModel.comment;
 
     return Padding(
       padding: const EdgeInsets.all(18.0),
@@ -22,7 +22,7 @@ class CommentBox extends StatelessWidget {
           ),
           Expanded(
             child: TextFormField(
-              initialValue: _text,
+              initialValue: text,
               cursorColor: Colors.green,
               keyboardType: TextInputType.text,
               maxLength: 20,

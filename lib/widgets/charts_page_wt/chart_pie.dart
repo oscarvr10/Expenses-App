@@ -1,4 +1,3 @@
-import 'package:charts_flutter/flutter.dart';
 import 'package:exp_app/models/combined_model.dart';
 import 'package:exp_app/providers/expenses_provider.dart';
 import 'package:exp_app/utils/extensions.dart';

@@ -136,12 +136,12 @@ class ExpensesProvider extends ChangeNotifier {
   */
 
   List<CombinedModel> get allExpensesList {
-    List<CombinedModel> _cModel = [];
+    List<CombinedModel> cModel = [];
 
     for (var e in eList) {
       for (var f in fList) {
         if (e.link == f.id) {
-          _cModel.add(
+          cModel.add(
             CombinedModel(
               category: f.category,
               color: f.color,
@@ -159,14 +159,14 @@ class ExpensesProvider extends ChangeNotifier {
       }
     }
 
-    return cList = [..._cModel];
+    return cList = [...cModel];
   }
 
   List<CombinedModel> get allEntriesList {
-    List<CombinedModel> _etModel = [];
+    List<CombinedModel> etModel = [];
 
     for (var et in etList) {
-      _etModel.add(
+      etModel.add(
         CombinedModel(
           id: et.id,
           amount: et.entries,
@@ -178,35 +178,35 @@ class ExpensesProvider extends ChangeNotifier {
       );
     }
 
-    return cList = [..._etModel];
+    return cList = [...etModel];
   }
 
   List<CombinedModel> get groupExpensesList {
-    List<CombinedModel> _cModel = [];
+    List<CombinedModel> cModel = [];
 
     for (var e in eList) {
       for (var f in fList) {
         if (e.link == f.id) {
-          double _amount = eList
+          double amount = eList
               .where((e) => e.link == f.id)
               .fold(0.0, (previousValue, e) => previousValue + e.expense);
-          _cModel.add(
+          cModel.add(
             CombinedModel(
               category: f.category,
               color: f.color,
               icon: f.icon,
-              amount: _amount,
+              amount: amount,
             ),
           );
         }
       }
     }
 
-    var encode = _cModel.map((e) => jsonEncode(e));
+    var encode = cModel.map((e) => jsonEncode(e));
     var unique = encode.toSet();
     var result = unique.map((e) => jsonDecode(e));
-    _cModel = result.map((e) => CombinedModel.fromJson(e)).toList();
+    cModel = result.map((e) => CombinedModel.fromJson(e)).toList();
 
-    return cList = [..._cModel];
+    return cList = [...cModel];
   }
 }
