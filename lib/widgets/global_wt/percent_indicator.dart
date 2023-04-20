@@ -46,10 +46,15 @@ class PercentCircular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _percent = percent;
+    if (_percent > 1) {
+      _percent = 1;
+    }
+
     return CircularPercentIndicator(
       animation: true,
-      animationDuration: 1000,
-      percent: percent,
+      animationDuration: 800,
+      percent: _percent,
       radius: radius,
       progressColor: color,
       arcType: arcType,
@@ -57,7 +62,7 @@ class PercentCircular extends StatelessWidget {
       lineWidth: 12.0,
       circularStrokeCap: CircularStrokeCap.round,
       center: Text(
-        '${(percent * 100).toStringAsFixed(0)}%',
+        '${(_percent * 100).toStringAsFixed(0)}%',
         style: const TextStyle(fontSize: 25.0),
       ),
     );

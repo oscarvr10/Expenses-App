@@ -21,12 +21,11 @@ class _BalancePageState extends State<BalancePage> {
   final _scrollController = ScrollController();
   double _offset = 0;
 
-  double get _max => max(90 - _offset * 90, 0.0);
+  double get _max => max(80 - _offset * 80, 0.0);
 
   void _listener() {
     setState(() {
       _offset = _scrollController.offset / 100;
-      print(_max);
     });
   }
 

@@ -20,7 +20,7 @@ class CustomNavigationBar extends StatelessWidget {
         BottomNavigationBarItem(
             label: 'Balance', icon: Icon(Icons.account_balance_outlined)),
         BottomNavigationBarItem(
-            label: 'Gráficos', icon: Icon(Icons.bar_chart_outlined)),
+            label: 'Gastos', icon: Icon(Icons.bar_chart_outlined)),
         BottomNavigationBarItem(
             label: 'Configuración', icon: Icon(Icons.settings)),
       ],

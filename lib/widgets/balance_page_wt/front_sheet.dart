@@ -1,5 +1,8 @@
 import 'package:exp_app/utils/constants.dart';
+import 'package:exp_app/widgets/balance_page_wt/flayer_balance.dart';
 import 'package:exp_app/widgets/balance_page_wt/flayer_categories.dart';
+import 'package:exp_app/widgets/balance_page_wt/flayer_frecuency.dart';
+import 'package:exp_app/widgets/balance_page_wt/flayer_movements.dart';
 import 'package:exp_app/widgets/balance_page_wt/flayer_skin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,22 +35,19 @@ class FrontSheet extends StatelessWidget {
                 ),
                 FlayerSkin(
                   title: 'Frecuencia de Gastos',
-                  body: SizedBox(
-                    height: 150.0,
-                  ),
+                  body: FlayerFrecuency(),
                 ),
                 FlayerSkin(
                   title: 'Movimientos',
-                  body: SizedBox(
-                    height: 150.0,
-                  ),
+                  body: FlayerMovements(),
                 ),
                 FlayerSkin(
                   title: 'Balance General',
-                  body: SizedBox(
-                    height: 150.0,
-                  ),
+                  body: FlayerBalance(),
                 ),
+                SizedBox(
+                  height: 60.0,
+                )
               ],
             )
           : Column(
