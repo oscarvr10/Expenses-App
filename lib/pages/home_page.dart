@@ -1,3 +1,4 @@
+import 'package:exp_app/pages/settings_page.dart';
 import 'package:exp_app/providers/expenses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,26 +21,28 @@ class HomePage extends StatelessWidget {
 }
 
 class _HomePage extends StatelessWidget {
-  const _HomePage({super.key});
+  const _HomePage();
 
   @override
   Widget build(BuildContext context) {
     final uiProvider = Provider.of<UIProvider>(context);
     // final expProvider = Provider.of<ExpensesProvider>(context, listen: false);
     final expProvider = context.read<ExpensesProvider>();
-    final DateTime _currentDate = DateTime.now();
+    final DateTime currentDate = DateTime.now();
 
     final currentIndex = uiProvider.bnbIndex;
     final currentMonth = uiProvider.selectedMonth + 1;
 
     switch (currentIndex) {
       case 0:
-        expProvider.getExpensesByDate(currentMonth, _currentDate.year);
-        expProvider.getEntriesByDate(currentMonth, _currentDate.year);
+        expProvider.getExpensesByDate(currentMonth, currentDate.year);
+        expProvider.getEntriesByDate(currentMonth, currentDate.year);
         expProvider.getAllFeatures();
         return const BalancePage();
       case 1:
         return const ChartsPage();
+      case 2:
+        return const SettingsPage();
       default:
         return const BalancePage();
     }
