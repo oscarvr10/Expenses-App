@@ -86,6 +86,7 @@ class _ExpensesDetailsState extends State<ExpensesDetails> {
                 alignment: Alignment(_offset, 1),
                 child: Text(
                   getAmountFormat(totalExpense),
+                  style: TextStyle(color: Theme.of(context).dividerColor),
                 ),
               ),
               centerTitle: true,

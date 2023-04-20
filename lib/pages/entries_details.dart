@@ -83,6 +83,7 @@ class _EntriesDetailsState extends State<EntriesDetails> {
                 alignment: Alignment(_offset, 1),
                 child: Text(
                   getAmountFormat(totalEntries),
+                  style: TextStyle(color: Theme.of(context).dividerColor),
                 ),
               ),
               centerTitle: true,

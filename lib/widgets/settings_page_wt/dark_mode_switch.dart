@@ -1,4 +1,7 @@
+import 'package:exp_app/providers/theme_provider.dart';
+import 'package:exp_app/providers/user_prefs.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DarkModeSwitch extends StatefulWidget {
   const DarkModeSwitch({super.key});
@@ -9,10 +12,18 @@ class DarkModeSwitch extends StatefulWidget {
 
 class _DarkModeSwitchState extends State<DarkModeSwitch> {
   bool _darkMode = false;
+  final prefs = UserPrefs();
+
+  @override
+  void initState() {
+    _darkMode = prefs.darkMode;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SwitchListTile(
+      activeColor: Colors.green,
       value: _darkMode,
       title: const Text(
         'Modo Oscuro',
@@ -22,6 +33,8 @@ class _DarkModeSwitchState extends State<DarkModeSwitch> {
       onChanged: (value) {
         setState(() {
           _darkMode = value;
+          prefs.darkMode = value;
+          context.read<ThemeProvider>().swapTheme();
         });
       },
     );

@@ -13,6 +13,7 @@ class CustomFAB extends StatelessWidget {
 
     childButtons.add(SpeedDialChild(
       backgroundColor: Colors.red,
+      foregroundColor: Colors.white,
       child: const Icon(Icons.remove),
       label: 'Gasto',
       labelStyle: const TextStyle(fontSize: 16.0),
@@ -31,6 +32,7 @@ class CustomFAB extends StatelessWidget {
 
     childButtons.add(SpeedDialChild(
       backgroundColor: Colors.green,
+      foregroundColor: Colors.white,
       child: const Icon(Icons.add),
       label: 'Ingreso',
       labelStyle: const TextStyle(fontSize: 16.0),

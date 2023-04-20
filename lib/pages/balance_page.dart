@@ -47,6 +47,7 @@ class _BalancePageState extends State<BalancePage> {
   Widget build(BuildContext context) {
     final eList = context.watch<ExpensesProvider>().eList;
     final etList = context.watch<ExpensesProvider>().etList;
+    String totalBalance = getBalance(eList, etList);
 
     return Scaffold(
       floatingActionButton: const CustomFAB(),
@@ -62,8 +63,12 @@ class _BalancePageState extends State<BalancePage> {
                 children: [
                   const MonthSelector(),
                   Text(
-                    getBalance(eList, etList),
-                    style: const TextStyle(fontSize: 34.0, color: Colors.green),
+                    totalBalance,
+                    style: TextStyle(
+                        fontSize: 34.0,
+                        color: totalBalance.contains('-')
+                            ? Colors.red
+                            : Colors.green),
                   ),
                   const Text('Balance', style: TextStyle(fontSize: 16.0))
                 ],
