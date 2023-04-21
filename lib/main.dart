@@ -3,20 +3,24 @@ import 'package:exp_app/pages/add_expenses.dart';
 import 'package:exp_app/pages/categories_details.dart';
 import 'package:exp_app/pages/expenses_details.dart';
 import 'package:exp_app/providers/expenses_provider.dart';
+import 'package:exp_app/providers/local_notifications.dart';
 import 'package:exp_app/providers/theme_provider.dart';
 import 'package:exp_app/providers/ui_provider.dart';
 import 'package:exp_app/providers/user_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  tz.initializeTimeZones();
   final prefs = UserPrefs();
+  final notif = LocalNotifications();
+
   await prefs.initPrefs();
+  await notif.initialize();
 
   runApp(
     MultiProvider(
@@ -37,6 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(builder: (context, provider, child) {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Material App',
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,

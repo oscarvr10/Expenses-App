@@ -1,3 +1,4 @@
+import 'package:exp_app/providers/local_notifications.dart';
 import 'package:exp_app/providers/user_prefs.dart';
 import 'package:exp_app/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class TimePicker extends StatefulWidget {
 
 class _TimePickerState extends State<TimePicker> {
   final _prefs = UserPrefs();
+  final _notifications = LocalNotifications();
   bool isEnabled = false;
   String title = 'Activar Notificaciones';
 
@@ -136,6 +138,7 @@ class _TimePickerState extends State<TimePicker> {
                         setState(() {
                           _prefs.hour = hour!;
                           _prefs.minute = minute!;
+                          _notifications.dailyNotification(hour!, minute!);
                         });
                         Navigator.pop(context);
                       },
@@ -154,8 +157,10 @@ class _TimePickerState extends State<TimePicker> {
     if (value) {
       _prefs.hour = 21;
       _prefs.minute = 0;
+      _notifications.dailyNotification(21, 0);
     } else {
       _prefs.deleteTime();
+      _notifications.cancelNotification();
     }
   }
 }
