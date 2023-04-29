@@ -7,8 +7,13 @@ class LocalNotifications {
       FlutterLocalNotificationsPlugin();
 
   initialize() async {
+    _plugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
+        .requestPermission();
+
     AndroidInitializationSettings androidInit =
-        const AndroidInitializationSettings('@mipmap/pie');
+        const AndroidInitializationSettings('mipmap/pie');
 
     InitializationSettings initSettings = InitializationSettings(
       android: androidInit,
@@ -31,8 +36,8 @@ class LocalNotifications {
     }
 
     var bigImage = const BigPictureStyleInformation(
-      DrawableResourceAndroidBitmap('@mipmap/big'),
-      largeIcon: DrawableResourceAndroidBitmap('@mipmap/pie'),
+      DrawableResourceAndroidBitmap('mipmap/big'),
+      largeIcon: DrawableResourceAndroidBitmap('mipmap/pie'),
       contentTitle: 'Es hora de registrar tus gastos',
       summaryText: 'No olvides registrar los gastos del día',
       htmlFormatContent: true,
