@@ -5,9 +5,10 @@ import 'package:exp_app/providers/ui_provider.dart';
 import 'package:exp_app/utils/extensions.dart';
 import 'package:exp_app/utils/math_operations.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter/src/text_element.dart' as txt_element;
-import 'package:charts_flutter/src/text_style.dart' as txt_style;
+import 'package:community_charts_flutter/community_charts_flutter.dart'
+    as charts;
+import 'package:community_charts_flutter/src/text_element.dart' as txt_element;
+import 'package:community_charts_flutter/src/text_style.dart' as txt_style;
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 

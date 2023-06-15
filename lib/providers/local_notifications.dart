@@ -1,25 +1,20 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'dart:io' show Platform;
 
 class LocalNotifications {
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
-  initialize() async {
-    _plugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()!
-        .requestPermission();
+  initialize() {
+    if (Platform.isAndroid) {
+      initializeAndroidNotificationSettings();
+    }
 
-    AndroidInitializationSettings androidInit =
-        const AndroidInitializationSettings('mipmap/pie');
-
-    InitializationSettings initSettings = InitializationSettings(
-      android: androidInit,
-    );
-
-    await _plugin.initialize(initSettings);
+    if (Platform.isIOS) {
+      initializeiOSNotificationSettings();
+    }
   }
 
   dailyNotification(int hour, int minute) async {
@@ -57,12 +52,46 @@ class LocalNotifications {
       platform,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exact,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 
   cancelNotification() async {
     await _plugin.cancelAll();
+  }
+
+  initializeiOSNotificationSettings() async {
+    _plugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()!
+        .requestPermissions(alert: true, badge: true);
+
+    DarwinInitializationSettings iOSInit = const DarwinInitializationSettings(
+        requestSoundPermission: false,
+        requestBadgePermission: false,
+        requestAlertPermission: false);
+
+    InitializationSettings initSettings = InitializationSettings(
+      iOS: iOSInit,
+    );
+
+    await _plugin.initialize(initSettings);
+  }
+
+  initializeAndroidNotificationSettings() async {
+    _plugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
+        .requestPermission();
+
+    AndroidInitializationSettings androidInit =
+        const AndroidInitializationSettings('mipmap/pie');
+
+    InitializationSettings initSettings = InitializationSettings(
+      android: androidInit,
+    );
+
+    await _plugin.initialize(initSettings);
   }
 }

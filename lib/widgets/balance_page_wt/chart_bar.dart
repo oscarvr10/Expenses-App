@@ -1,4 +1,5 @@
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:community_charts_flutter/community_charts_flutter.dart'
+    as charts;
 import 'package:exp_app/providers/expenses_provider.dart';
 import 'package:exp_app/utils/math_operations.dart';
 import 'package:flutter/material.dart';
